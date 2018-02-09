@@ -7,6 +7,10 @@ pipeline {
           sh 'echo Main-Class: Rectangulator > MANIFEST.MF'
           sh 'jar -cvmf MANIFEST.MF rectangle.jar *.class'
         }
+        post {
+          success {
+            archiveArtifacts artifacts: 'rectangle.jar', fingerprint: true
+          }
       }
       stage('run') {
         steps {
@@ -14,9 +18,5 @@ pipeline {
         }
       }
     }
-    post {
-      success {
-        archiveArtifacts artifacts: 'rectangle.jar', fingerprint: true
-      }
-    }
+  }
 }
